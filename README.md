@@ -2,4 +2,4 @@
 
 ## Generate Secret_kry
 
-- node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+- **run this code to console/terminal:** node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
