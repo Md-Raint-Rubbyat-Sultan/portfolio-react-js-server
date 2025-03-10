@@ -1,5 +1,5 @@
 const health = (req, res) => {
-  res.send("we are running!").json();
+  res.send("we are running!");
 };
 
 export default health;

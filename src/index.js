@@ -1,14 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
-dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-// routes
+// routes and middlewares paths
 import routes from "./routes/index.js";
 import globalErrorHandler from "./utils/globalErrorHandler.js";
 import commonMiddlewares from "./middlewares/commonMiddlewares.js";
+
+// use of packages
+dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 commonMiddlewares(app);
