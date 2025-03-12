@@ -22,21 +22,6 @@ const technologySchema = new Schema({
   },
 });
 
-const technologiesSchema = new mongoose.Schema([
-  {
-    frontend: [technologySchema],
-  },
-  {
-    backend: [technologySchema],
-  },
-  {
-    authentication: [technologySchema],
-  },
-  {
-    versionControl: [technologySchema],
-  },
-]);
-
 const chalangesSchema = new Schema({
   img: {
     type: String,
@@ -49,17 +34,16 @@ const chalangesSchema = new Schema({
 });
 
 const projectsSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
   clintSite: siteSchema,
   serverSite: siteSchema,
-  technologies: technologiesSchema,
-  description: {
-    type: String,
-    default: "",
-  },
+  technologies: [
+    {
+      category: { type: String, required: true },
+      tech: [technologySchema],
+    },
+  ],
+  description: { type: String, default: "" },
   chalanges: [chalangesSchema],
 });
 
