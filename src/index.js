@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import routes from "./routes/index.js";
 import globalErrorHandler from "./utils/globalErrorHandler.js";
 import commonMiddlewares from "./middlewares/commonMiddlewares.js";
+import DbConnection from "./db/DbConnection/DbConnection.js";
 
 // use of packages
 dotenv.config();
@@ -29,6 +30,10 @@ app.use(globalErrorHandler);
 // Start the server
 (async () => {
   // connect the db here to ensure the connection first
+  console.log("connecting to db");
+  await DbConnection();
+  console.log("Db connected");
+  // listening the port
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
