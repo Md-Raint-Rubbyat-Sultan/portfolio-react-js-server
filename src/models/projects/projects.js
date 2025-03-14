@@ -1,49 +1,34 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+const stringTypeRequired = { type: String, required: true };
+const stringTypeDefault = { type: String, default: null };
 
 const siteSchema = new Schema({
-  site: {
-    type: String,
-    default: null,
-  },
-  git: {
-    type: String,
-    default: null,
-  },
+  site: stringTypeDefault, // default
+  git: stringTypeDefault, // default
 });
 
 const technologySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  logo: {
-    type: String,
-    required: true,
-  },
+  name: stringTypeRequired,
+  logo: stringTypeRequired,
 });
 
 const chalangesSchema = new Schema({
-  img: {
-    type: String,
-    required: true,
-  },
-  chalange: {
-    type: String,
-    required: true,
-  },
+  img: stringTypeRequired,
+  chalange: stringTypeRequired,
 });
 
 const projectsSchema = new Schema({
-  name: { type: String, required: true },
+  name: stringTypeRequired,
   clintSite: siteSchema,
   serverSite: siteSchema,
   technologies: [
     {
-      category: { type: String, required: true },
+      category: stringTypeRequired,
       tech: [technologySchema],
     },
   ],
-  description: { type: String, default: "" },
+  description: stringTypeDefault, // default
   chalanges: [chalangesSchema],
 });
 

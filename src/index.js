@@ -10,7 +10,7 @@ import DbConnection from "./db/DbConnection/DbConnection.js";
 // use of packages
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware to parse JSON bodies
 commonMiddlewares(app);
