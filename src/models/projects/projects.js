@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const stringTypeRequired = { type: String, required: true };
 const stringTypeDefault = { type: String, default: null };
@@ -32,6 +32,6 @@ const projectsSchema = new Schema({
   chalanges: [chalangesSchema],
 });
 
-const projects = mongoose.model("Projects", projectsSchema);
+const projects = model("Projects", projectsSchema);
 
 export default projects;
