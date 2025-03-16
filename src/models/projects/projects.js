@@ -3,34 +3,37 @@ import { model, Schema } from "mongoose";
 const stringTypeRequired = { type: String, required: true };
 const stringTypeDefault = { type: String, default: null };
 
-const siteSchema = new Schema({
+const siteSchema = {
   site: stringTypeDefault, // default
   git: stringTypeDefault, // default
-});
+};
 
-const technologySchema = new Schema({
+const technologySchema = {
   name: stringTypeRequired,
   logo: stringTypeRequired,
-});
+};
 
-const chalangesSchema = new Schema({
+const chalangesSchema = {
   img: stringTypeRequired,
   chalange: stringTypeRequired,
-});
+};
 
-const projectsSchema = new Schema({
-  name: stringTypeRequired,
-  clintSite: siteSchema,
-  serverSite: siteSchema,
-  technologies: [
-    {
-      category: stringTypeRequired,
-      tech: [technologySchema],
-    },
-  ],
-  description: stringTypeDefault, // default
-  chalanges: [chalangesSchema],
-});
+const projectsSchema = new Schema(
+  {
+    name: stringTypeRequired,
+    clintSite: siteSchema,
+    serverSite: siteSchema,
+    technologies: [
+      {
+        category: stringTypeRequired,
+        tech: [technologySchema],
+      },
+    ],
+    description: stringTypeDefault, // default
+    chalanges: [chalangesSchema],
+  },
+  { timestamps: true }
+);
 
 const projects = model("Projects", projectsSchema);
 
