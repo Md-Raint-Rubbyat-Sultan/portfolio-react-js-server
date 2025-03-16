@@ -19,7 +19,7 @@ commonMiddlewares(app);
 app.use("/api/v1", routes);
 
 // error handling middleware
-app.all("*", (req, res, next) => {
+app.all("*", (req, _, next) => {
   const error = new Error(`Can't find ${req.originalUrl}`);
   error.status = 404;
   next(error);
