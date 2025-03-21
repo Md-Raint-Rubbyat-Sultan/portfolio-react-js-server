@@ -9,14 +9,17 @@ const protfolioImg = async (req, res) => {
   }
 
   try {
-    const result = await projects.findById(new ObjectId(projectId));
+    const result = await projects.findById(new ObjectId(projectId), {
+      technologies: 1,
+      _id: 0,
+    });
 
     // Check if project exists
     if (!result) {
       return res.status(404).send({ message: "Project not found!" });
     }
 
-    res.status(200).send({ data: result });
+    res.status(200).send(result);
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
