@@ -12,7 +12,7 @@ const allProjects = async (req, res) => {
     const result = await projects.find({}).limit(lim);
     res.status(200).send({ countProject, data: result });
   } catch (err) {
-    res.send(err.message);
+    res.status(500).send(err.message);
   }
 };
 
