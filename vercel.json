@@ -11,6 +11,11 @@
       "src": "/controllers/v1/(.*)",
       "dest": "/src/index.js",
       "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     }
   ]
 }
