@@ -13,4 +13,7 @@ router.use("/projects", projects);
 
 // Use admin info routes
 router.use("/adminData", adminData);
+
+// auth routes
+router.use("/auth");
 export default router;

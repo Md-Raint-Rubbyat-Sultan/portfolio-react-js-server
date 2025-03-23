@@ -1,20 +1,22 @@
 {
   "name": "portfolio_server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A normal server to supprot my portfolio project",
   "license": "ISC",
   "author": "https://github.com/Md-Raint-Rubbyat-Sultan",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon ./src/index.js"
+    "start": "NODE_ENV=production node ./src/index.js",
+    "dev": "NODE_ENV=development nodemon ./src/index.js"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.14.2",
     "mongoose": "^8.12.1"
   }
