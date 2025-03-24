@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 const stringTypeRequired = { type: String, required: true };
@@ -30,6 +30,6 @@ usersSchema.pre("save", async (next) => {
   }
 });
 
-const User = module("User", usersSchema);
+const User = model("User", usersSchema);
 
 export default User;
