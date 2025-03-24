@@ -15,7 +15,7 @@ const generateAuthToken = async (req, res, next) => {
 
     res.cookie("auth-token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV !== "production",
       sameSite: "strict",
     });
   } catch (error) {
