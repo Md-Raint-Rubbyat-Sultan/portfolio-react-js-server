@@ -2,6 +2,7 @@ import express from "express";
 import {
   generateAuthToken,
   login,
+  logout,
   register,
 } from "../../controllers/v1/auth/index.js";
 
@@ -13,7 +14,7 @@ router.post("/register", register);
 // login user
 router.post("/login", login);
 
-// generate token for authenticte user
-// router.post("/auth-token", generateAuthToken);
+// logout
+router.post("/logout", logout);
 
 export default router;
