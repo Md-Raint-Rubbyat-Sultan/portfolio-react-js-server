@@ -1,18 +1,21 @@
 import projects from "../../../../models/projects/projects.js";
-import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
 const protfolioImg = async (req, res) => {
   const projectId = "67d6ae793ad6a8cf68bfaf51";
 
-  if (!ObjectId.isValid(projectId)) {
+  if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).send({ message: "Invalid project ID!" });
   }
 
   try {
-    const result = await projects.findById(new ObjectId(projectId), {
-      technologies: 1,
-      _id: 0,
-    });
+    const result = await projects.findById(
+      new mongoose.Types.ObjectId(projectId),
+      {
+        technologies: 1,
+        _id: 0,
+      }
+    );
 
     // Check if project exists
     if (!result) {
