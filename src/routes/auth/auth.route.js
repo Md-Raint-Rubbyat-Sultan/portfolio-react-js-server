@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  generateAuthToken,
   login,
   logout,
   register,
+  verifyEmail,
 } from "../../controllers/v1/auth/index.js";
 
 const router = express.Router();
@@ -16,5 +16,8 @@ router.post("/login", login);
 
 // logout
 router.post("/logout", logout);
+
+// verify email
+router.post("/verify-mail", verifyEmail);
 
 export default router;
