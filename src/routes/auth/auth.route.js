@@ -14,6 +14,6 @@ router.post("/register", register);
 router.post("/login", login);
 
 // generate token for authenticte user
-router.post("/auth-token", generateAuthToken);
+// router.post("/auth-token", generateAuthToken);
 
 export default router;

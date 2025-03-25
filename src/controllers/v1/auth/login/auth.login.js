@@ -1,4 +1,5 @@
 import User from "../../../../models/users/users.js";
+import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -20,6 +21,17 @@ const login = async (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).send({ message: "invalid credentials." });
 
+    // token
+    const token = await generateAuthToken(user?.email);
+
+    res.cookie("auth-token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    });
+
+    // response
     res.status(200).send({
       _id: user._id,
       fullName: user.fullName,

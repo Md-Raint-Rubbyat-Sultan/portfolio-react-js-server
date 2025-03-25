@@ -1,4 +1,5 @@
 import User from "../../../../models/users/users.js";
+import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const register = async (req, res) => {
   const { email, fullName, password, profilePic, role } = req.body;
@@ -38,6 +39,17 @@ const register = async (req, res) => {
 
     await user.save();
 
+    // token
+    const token = await generateAuthToken(user?.email);
+
+    res.cookie("auth-token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3 * 24 * 60 * 60 * 1000,
+    });
+
+    // response
     res.status(200).send({
       message: "User register successfull.",
       user: {
