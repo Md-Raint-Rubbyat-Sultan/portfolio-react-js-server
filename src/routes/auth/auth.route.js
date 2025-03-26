@@ -5,6 +5,7 @@ import {
   register,
   verifyEmail,
 } from "../../controllers/v1/auth/index.js";
+import { verifyAuthToken } from "../../middlewares/verifyToken.js";
 
 const router = express.Router();
 
@@ -12,7 +13,7 @@ const router = express.Router();
 router.post("/register", register);
 
 // login user
-router.post("/login", login);
+router.post("/login", verifyAuthToken, login);
 
 // logout
 router.post("/logout", logout);

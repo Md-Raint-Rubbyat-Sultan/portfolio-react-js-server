@@ -34,6 +34,11 @@ const usersSchema = new Schema(
       default: "user",
       enum: ["user", "admin"], // Restrict to specific roles
     },
+    verify: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );

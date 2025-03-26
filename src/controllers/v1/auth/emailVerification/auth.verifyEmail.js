@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import randomNumder from "../../../../utils/randomNumberCode.js";
+import generateAuthToken from "../authToken/auth.generateToken.js";
 
 dotenv.config();
 
@@ -44,15 +45,24 @@ const verifyEmail = async (req, res) => {
     </div>`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, async (error, info) => {
       if (error) {
         res.status(400).send({ message: `failed to send email to ${email}` });
       } else {
-        // ___________ generate verification token ___________________
-        // ___________ send it as cookie _______________
-        // ___________ send the info to client _____________
+        // generate verification token
+        const token = await generateAuthToken(random, "3d");
+        // send it as cookie
+        res.cookie("verification-token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          maxAge: 3 * 24 * 60 * 60 * 1000, // 3 day in milisecond
+        });
 
-        res.status(201).send(info);
+        // send the info to client
+        res
+          .status(201)
+          .send({ ...info, message: "verfication email and token send." });
       }
     });
   } catch (error) {

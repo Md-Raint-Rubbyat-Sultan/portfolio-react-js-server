@@ -22,13 +22,13 @@ const login = async (req, res) => {
       return res.status(400).send({ message: "invalid credentials." });
 
     // token
-    const token = await generateAuthToken(user?.email);
+    const token = await generateAuthToken(user?.email, "3d");
 
     res.cookie("auth-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 3 * 24 * 60 * 60 * 1000,
+      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 day in milisecond
     });
 
     // response
@@ -42,7 +42,9 @@ const login = async (req, res) => {
       updatedAt: user.updatedAt,
     });
   } catch (error) {
-    res.status(500).send({ message: "internal server error" });
+    res
+      .status(500)
+      .send({ message: "internal server error", error: error.message });
   }
 };
 

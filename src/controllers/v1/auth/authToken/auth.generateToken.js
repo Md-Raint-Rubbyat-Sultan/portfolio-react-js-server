@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const generateAuthToken = async (email) => {
+const generateAuthToken = async (key, expires) => {
   try {
-    const token = jwt.sign({ email }, process.env.SECRET_KEY, {
-      expiresIn: "3d",
+    const token = jwt.sign({ key }, process.env.SECRET_KEY, {
+      expiresIn: expires,
     });
 
     return token;
