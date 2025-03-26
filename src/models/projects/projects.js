@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const stringTypeRequired = { type: String, required: true };
+const stringTypeRequired = { type: String, required: true, trim: true };
 const stringTypeDefault = { type: String, default: null };
 
 const siteSchema = {

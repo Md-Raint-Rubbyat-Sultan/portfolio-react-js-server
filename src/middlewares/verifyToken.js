@@ -33,13 +33,15 @@ const verifyVerificationToken = (req, res, next) => {
     const token = req?.cookies["verification-token"];
 
     if (!token)
-      return res.status(400).send({ message: "Verification code not found." });
+      return res
+        .status(401)
+        .send({ success: false, message: "Invalide Code." });
 
     jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
       if (error)
         return res
           .status(401)
-          .send({ message: "Verification code not found." });
+          .send({ success: false, message: "Invalide Code." });
       req.verify = decoded;
 
       next();

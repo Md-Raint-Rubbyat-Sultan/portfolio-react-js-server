@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import randomNumder from "../../../../utils/randomNumberCode.js";
 import generateAuthToken from "../authToken/auth.generateToken.js";
+import User from "../../../../models/users/users.js";
 
 dotenv.config();
 
@@ -10,6 +11,8 @@ const myEmail = "mdranitrubbyatsultan@gmail.com";
 const verifyEmail = async (req, res) => {
   const { email } = req.body;
 
+  const service = email.split("@").pop().split(".")[0];
+
   const random = randomNumder();
 
   try {
@@ -17,8 +20,16 @@ const verifyEmail = async (req, res) => {
       return res.status(400).send({ message: "Email address not found." });
     }
 
+    // is user exist
+    const isUserExist = await User.findOne({ email });
+
+    if (isUserExist?.verify || isUserExist)
+      return res
+        .status(400)
+        .send({ message: "User already exists with this email." });
+
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      service,
       auth: {
         user: myEmail,
         pass: process.env.APP_PASS,
@@ -47,22 +58,25 @@ const verifyEmail = async (req, res) => {
 
     transporter.sendMail(mailOptions, async (error, info) => {
       if (error) {
-        res.status(400).send({ message: `failed to send email to ${email}` });
+        res.status(400).send({
+          success: false,
+          message: `failed to send email to ${email}`,
+        });
       } else {
         // generate verification token
-        const token = await generateAuthToken(random, "3d");
+        const token = await generateAuthToken(random, "2m");
         // send it as cookie
         res.cookie("verification-token", token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
-          maxAge: 3 * 24 * 60 * 60 * 1000, // 3 day in milisecond
+          maxAge: 2 * 60 * 1000, // 5 day in milisecond
         });
 
         // send the info to client
         res
           .status(201)
-          .send({ ...info, message: "verfication email and token send." });
+          .send({ ...info, message: `verfication email send to ${email}` });
       }
     });
   } catch (error) {

@@ -2,9 +2,25 @@ import User from "../../../../models/users/users.js";
 import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const register = async (req, res) => {
-  const { email, fullName, password, profilePic, role } = req.body;
-
   try {
+    const { email, fullName, password, profilePic, role, verificationCode } =
+      req.body;
+
+    const { key } = req.verify;
+
+    // check is the code is valide
+    if (isNaN(Number(verificationCode))) {
+      return res.status(400).send({
+        success: false,
+        message: "Verification code must be a number",
+      });
+    }
+
+    if (Number(verificationCode) !== Number(key))
+      return res
+        .status(401)
+        .send({ success: false, message: "Invalide Code." });
+
     // email & fullName & password validate
     if (!email || !fullName || !password)
       return res
@@ -25,6 +41,7 @@ const register = async (req, res) => {
         .status(400)
         .send({ message: "User already exists with this email." });
 
+    // set random profile if user didn't give one
     if (!profilePic) {
       req.body.profilePic = `https://api.dicebear.com/9.x/avataaars/svg/seed=${fullName}`;
     }
@@ -35,6 +52,7 @@ const register = async (req, res) => {
       password,
       profilePic,
       role,
+      verify: true,
     });
 
     await user.save();
