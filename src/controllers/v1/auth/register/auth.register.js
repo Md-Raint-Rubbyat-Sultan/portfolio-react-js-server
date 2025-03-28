@@ -76,6 +76,7 @@ const register = async (req, res) => {
         email: user.email,
         profilePic: user.profilePic,
         role: user.role,
+        verify: user.verify,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
