@@ -14,7 +14,7 @@ import {
 const router = express.Router();
 
 // verify email
-router.post("/verify-mail", verifyEmail);
+router.post("/verify-email", verifyEmail);
 
 // register user
 router.post("/register", verifyVerificationToken, register);
