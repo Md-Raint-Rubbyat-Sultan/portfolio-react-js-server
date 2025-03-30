@@ -7,9 +7,9 @@ const logout = async (req, res) => {
         sameSite: "strict",
         maxAge: 0,
       })
-      .send({ message: "Logout successfull." });
+      .send({ message: "Logout successfull.", success: true });
   } catch (error) {
-    res.status(500).send({ message: "internal server error" });
+    res.status(500).send({ message: "internal server error", success: false });
   }
 };
 
