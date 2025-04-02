@@ -23,7 +23,7 @@ router.post("/register", verifyVerificationToken, register);
 router.post("/login", login);
 
 // check auth
-router.post("/check-auth", verifyAuthToken, checkAuth);
+router.get("/check-auth", verifyAuthToken, checkAuth);
 
 // logout
 router.post("/logout", logout);
