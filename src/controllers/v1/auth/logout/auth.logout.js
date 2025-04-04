@@ -1,12 +1,9 @@
-const logout = async (req, res) => {
+import cookieOptions from "../../../../utils/cookieOptions.js";
+
+const logout = async (_, res) => {
   try {
     res
-      .clearCookie("auth-token", {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 0,
-      })
+      .clearCookie("auth-token", cookieOptions(0))
       .send({ message: "Logout successfull.", success: true });
   } catch (error) {
     res.status(500).send({ message: "internal server error", success: false });

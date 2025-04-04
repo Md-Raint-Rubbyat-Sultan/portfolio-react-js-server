@@ -1,4 +1,5 @@
 import User from "../../../../models/users/users.js";
+import cookieOptions from "../../../../utils/cookieOptions.js";
 import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const login = async (req, res) => {
@@ -24,12 +25,7 @@ const login = async (req, res) => {
     // token
     const token = await generateAuthToken(user?.email, "3d");
 
-    res.cookie("auth-token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 day in milisecond
-    });
+    res.cookie("auth-token", token, cookieOptions(3 * 24 * 60 * 60 * 1000));
 
     // response
     res.status(200).send({

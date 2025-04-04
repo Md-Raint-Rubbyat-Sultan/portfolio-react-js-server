@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import randomNumder from "../../../../utils/randomNumberCode.js";
 import generateAuthToken from "../authToken/auth.generateToken.js";
 import User from "../../../../models/users/users.js";
+import cookieOptions from "../../../../utils/cookieOptions.js";
 
 dotenv.config();
 
@@ -65,13 +66,9 @@ const verifyEmail = async (req, res) => {
       } else {
         // generate verification token
         const token = await generateAuthToken(random, "2m");
+
         // send it as cookie
-        res.cookie("verification-token", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          maxAge: 2 * 60 * 1000, // 5 day in milisecond
-        });
+        res.cookie("verification-token", token, cookieOptions(2 * 60 * 1000));
 
         // send the info to client
         res
