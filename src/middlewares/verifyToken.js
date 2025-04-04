@@ -10,13 +10,14 @@ const verifyAuthToken = (req, res, next) => {
     if (!token)
       return res
         .status(401)
-        .send({ message: "Unauthorized user, please login." });
+        .send({ message: "Unauthorized user, please login.", success: false });
 
     jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
       if (error)
-        return res
-          .status(401)
-          .send({ message: "Unauthorized user, please login." });
+        return res.status(403).send({
+          message: "Unauthorized user, please login.",
+          success: false,
+        });
       req.user = decoded;
 
       next();
