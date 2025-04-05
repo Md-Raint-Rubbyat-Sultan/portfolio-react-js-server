@@ -7,8 +7,6 @@ import cookieOptions from "../../../../utils/cookieOptions.js";
 
 dotenv.config();
 
-const myEmail = process.env.APP_EMAIL;
-
 const verifyEmail = async (req, res) => {
   const { email } = req.body;
 
