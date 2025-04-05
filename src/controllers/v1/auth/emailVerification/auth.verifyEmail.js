@@ -19,7 +19,7 @@ const verifyEmail = async (req, res) => {
 
     const service = email.split("@").pop().split(".")[0];
 
-    const random = randomNumder();
+    const random = await randomNumder();
 
     // is user exist
     const isUserExist = await User.findOne({ email });
