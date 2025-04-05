@@ -7,19 +7,19 @@ import cookieOptions from "../../../../utils/cookieOptions.js";
 
 dotenv.config();
 
-const myEmail = "mdranitrubbyatsultan@gmail.com";
+const myEmail = process.env.APP_EMAIL;
 
 const verifyEmail = async (req, res) => {
   const { email } = req.body;
-
-  const service = email.split("@").pop().split(".")[0];
-
-  const random = randomNumder();
 
   try {
     if (!email) {
       return res.status(400).send({ message: "Email address not found." });
     }
+
+    const service = email.split("@").pop().split(".")[0];
+
+    const random = randomNumder();
 
     // is user exist
     const isUserExist = await User.findOne({ email });
