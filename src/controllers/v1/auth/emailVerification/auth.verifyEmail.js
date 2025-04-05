@@ -32,13 +32,13 @@ const verifyEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service,
       auth: {
-        user: myEmail,
+        user: process.env.APP_EMAIL,
         pass: process.env.APP_PASS,
       },
     });
 
     const mailOptions = {
-      from: myEmail,
+      from: process.env.APP_EMAIL,
       to: email,
       subject: "Your email verification code",
       html: `<div style="text-align: center">
