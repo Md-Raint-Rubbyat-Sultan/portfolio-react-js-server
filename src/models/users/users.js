@@ -26,8 +26,11 @@ const usersSchema = new Schema(
       match: [regex.password, "Password must contain at least 6 characters"],
     },
     profilePic: {
-      type: String,
-      default: "https://api.dicebear.com/9.x/avataaars/svg",
+      url: {
+        type: String,
+        default: "https://api.dicebear.com/9.x/avataaars/svg",
+      },
+      deleteUrl: { type: String, default: "" },
     },
     role: {
       ...stringTypeRequired,

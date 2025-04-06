@@ -1,5 +1,6 @@
 import User from "../../../../models/users/users.js";
 import cookieOptions from "../../../../utils/cookieOptions.js";
+import uploadPic from "../../../../utils/uploadPic.js";
 import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const register = async (req, res) => {
@@ -41,17 +42,14 @@ const register = async (req, res) => {
       return res
         .status(400)
         .send({ message: "User already exists with this email." });
-
     // set random profile if user didn't give one
-    if (!profilePic) {
-      req.body.profilePic = `https://api.dicebear.com/9.x/avataaars/svg/seed=${fullName}`;
-    }
+    const savePic = await uploadPic(profilePic, fullName);
 
     const user = new User({
       fullName,
       email,
       password,
-      profilePic,
+      profilePic: savePic,
       role,
       verify: true,
     });
