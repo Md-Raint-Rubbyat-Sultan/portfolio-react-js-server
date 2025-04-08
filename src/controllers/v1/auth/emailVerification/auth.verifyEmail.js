@@ -66,7 +66,7 @@ const verifyEmail = async (req, res) => {
         const token = await generateAuthToken(random, "2m");
 
         // send it as cookie
-        res.cookie("verification-token", token, cookieOptions(2 * 60 * 1000));
+        res.cookie("verification-token", token, cookieOptions(5 * 60 * 1000));
 
         // send the info to client
         res
