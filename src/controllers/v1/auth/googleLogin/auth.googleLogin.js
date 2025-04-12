@@ -4,7 +4,7 @@ import generateAuthToken from "../authToken/auth.generateToken.js";
 
 const googleLogin = async (req, res) => {
   try {
-    const { fullName, email, profilePic, verify } = req.body;
+    const { fullName, email, profilePic, verify, role } = req.body;
 
     if (!email || !fullName)
       return res.status(400).send({ message: "Somthing went wrong!" });
@@ -19,7 +19,10 @@ const googleLogin = async (req, res) => {
       return;
     }
 
-    let newProfile = profilePic;
+    let newProfile = {
+      url: profilePic,
+      deleteUrl: "",
+    };
 
     if (!newProfile) {
       newProfile = {
@@ -41,6 +44,7 @@ const googleLogin = async (req, res) => {
 
     // token
     const token = await generateAuthToken(user?.email, "3d");
+
     res.cookie("auth-token", token, cookieOptions(3 * 24 * 60 * 60 * 1000));
 
     // response
@@ -58,6 +62,7 @@ const googleLogin = async (req, res) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .send({ message: "internal server error", error: error.message });
