@@ -31,7 +31,7 @@ const googleLogin = async (req, res) => {
     const user = new User({
       fullName,
       email,
-      password,
+      password: "Social Login",
       profilePic: newProfile,
       role,
       verify,
