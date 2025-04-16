@@ -11,9 +11,10 @@ const login = async (req, res) => {
         .status(400)
         .send({ message: "invalid credentials. Must fill every field" });
 
-    // is user exist
+    // Find user
     const user = await User.findOne({ email });
 
+    // is user exist
     if (!user)
       return res.status(400).send({ message: "User dose not exists." });
 
@@ -39,6 +40,7 @@ const login = async (req, res) => {
       updatedAt: user.updatedAt,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .send({ message: "internal server error", error: error.message });

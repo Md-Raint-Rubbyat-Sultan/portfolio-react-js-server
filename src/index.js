@@ -6,7 +6,6 @@ import routes from "./routes/index.js";
 import globalErrorHandler from "./utils/globalErrorHandler.js";
 import commonMiddlewares from "./middlewares/commonMiddlewares.js";
 import DbConnection from "./db/DbConnection/DbConnection.js";
-import uploadPic from "./utils/uploadPic.js";
 
 // use of packages
 dotenv.config();

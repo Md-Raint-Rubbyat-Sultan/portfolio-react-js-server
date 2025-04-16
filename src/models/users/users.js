@@ -61,9 +61,17 @@ usersSchema.pre("save", async function (next) {
 
 usersSchema.methods.comparePassword = async function (userPassword) {
   try {
+    if (!userPassword) {
+      throw new Error("Password is required for comparison");
+    }
+
+    if (!this.password) {
+      throw new Error("User password is not set");
+    }
+
     return await bcrypt.compare(userPassword, this.password);
   } catch (error) {
-    res.status(500).send({ message: "internal server error" });
+    throw new Error(error);
   }
 };
 
